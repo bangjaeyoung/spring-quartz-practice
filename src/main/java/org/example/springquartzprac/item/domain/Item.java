@@ -26,9 +26,12 @@ public class Item {
     
     private LocalDate today = LocalDate.of(1999, 9, 8);
     
+    private String itemType;
+    
     @Builder
-    private Item(String itemName, Long price) {
+    private Item(String itemName, Long price, String itemType) {
         this.itemName = itemName;
         this.price = price;
+        this.itemType = itemType;
     }
 }
