@@ -8,6 +8,8 @@ import org.example.springquartzprac.item.dto.request.ItemRequest;
 import org.example.springquartzprac.item.service.ItemInfoService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -20,5 +22,10 @@ public class ItemInfoServiceImpl implements ItemInfoService {
         Item item = ItemRequest.toEntity(itemRequest);
         itemRepository.save(item);
         return item.getItemId();
+    }
+    
+    @Override
+    public void updateItemDate(LocalDate today) {
+        // TODO: 구현 필요
     }
 }
