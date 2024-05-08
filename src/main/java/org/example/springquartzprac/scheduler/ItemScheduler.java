@@ -1,5 +1,6 @@
 package org.example.springquartzprac.scheduler;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.springquartzprac.scheduler.job.UpdateItemDateSchedule;
@@ -11,15 +12,17 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class ItemScheduler {
     
     private final Scheduler scheduler;
     
-    // TODO: Quartz 관련 필요한 H2 DB에 맞는 기본 테이블 추가 스크립트 필요 - data.sql?
-    private void updateItemDateSchedule() throws SchedulerException {
+    @PostConstruct
+    public void updateItemDateSchedule() throws SchedulerException {
         log.info("=== UpdateItemDateSchedule 시작 ===");
         
         JobDetail jobDetail = JobBuilder.newJob(UpdateItemDateSchedule.class)
@@ -31,7 +34,7 @@ public class ItemScheduler {
         
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity(triggerKey)
-                .withSchedule(CronScheduleBuilder.cronSchedule("*/10 * * * * ?"))
+                .withSchedule(CronScheduleBuilder.cronSchedule("*/1 * * * * ?"))
                 .build();
         
         scheduler.scheduleJob(jobDetail, trigger);
